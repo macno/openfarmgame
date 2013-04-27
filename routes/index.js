@@ -393,6 +393,7 @@ exports.handlePlow = function(req, res, next) {
             next(err);
         } else {
             res.redirect("/");
+            req.user.plowActivity(plot, function(err) {});
         }
     });
 

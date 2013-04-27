@@ -152,6 +152,19 @@ Farmer.prototype.joinActivity = function(callback) {
                         callback);
 };
 
+Farmer.prototype.plowActivity = function(plot, callback) {
+    var farmer = this,
+        obj = plot.asObject(),
+        content = "<a href='" + farmer.homepage + "'>" + farmer.name + "</a> " + 
+            " plowed " + 
+            "<a href='" + obj.url + "'>" + obj.displayName + "</a>";
+
+    farmer.postActivity({verb: "http://openfarmgame.com/schema/verb/plow",
+                         content: content,
+                         object: obj},
+                         callback);
+};
+
 Farmer.prototype.buyActivity = function(plot, callback) {
     var farmer = this,
         obj = plot.asObject(),
