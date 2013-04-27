@@ -4,10 +4,22 @@
     <%= partial("crop") %>
     <% } else { %>
     <img src="/images/dirt.jpg" width="300" height="200" alt="Empty">
-    <h3>(Empty)</h3>
-    <p>This is an empty plot.</p>
     <% if (user && user.id == farmer.id) { %>
-    <p><a class="btn btn-primary" rel="tooltip" title="choose a crop to plant" href="/plot/<%- plot.uuid %>/plant">Plant</a></p>
+       <% if ( plot.state == 'ready') { %>
+       <h3><%- plot.state %></h3>
+       <p>This plot is ready to be planted.</p>
+       <p><a class="btn btn-primary" rel="tooltip" title="choose a crop to plant" href="/plot/<%- plot.uuid %>/plant">Plant</a></p>
+       <% } else if (plot.state == 'raw') { %>
+       <h3><%- plot.state %></h3>
+       <p>This is an empty plot.</p>
+       <p><a class="btn btn-primary" rel="tooltip" title="plow the plot" href="/plot/<%- plot.uuid %>/plow">Plow</a></p>
+       <% } else { %>
+	<h3><%- plot.state %></h3>
+       <p>This plot is beeing plowed.</p>
+       <% } %>
+
+    <% } else { %>
+	<h3><%- plot.state %></h3>
     <% } %>
     <% } %>
   </div>

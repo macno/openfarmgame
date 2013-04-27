@@ -23,3 +23,9 @@ on. I think a lot of them came from other places.
 * bellpeppers.jpg: http://www.freestockphotos.biz/stockphoto/9050
 * onions.jpg: http://www.public-domain-image.com/flora-plants-public-domain-images-pictures/vegetables-public-domain-images-pictures/onion-pictures/yellow-onions-vegetables.jpg.html
 * chilipeppers.jpg: http://www.public-domain-image.com/flora-plants-public-domain-images-pictures/vegetables-public-domain-images-pictures/pepper-pictures/chili-chillies-peppers.jpg.html
+
+Equimpents' images
+
+* hoe.jpg: http://en.wikipedia.org/wiki/File:Peasant_in_the_vegetable_garden.JPG
+* plow.jpg: http://en.wikipedia.org/wiki/File:Farmer_plowing_in_Fahrenwalde,_Mecklenburg-Vorpommern,_Germany.jpg
+* tractor.jpg: http://en.wikipedia.org/wiki/File:Traktor_na_oranju.JPG

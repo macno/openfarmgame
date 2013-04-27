@@ -1,0 +1,11 @@
+<h1>Plow a plant </h1>
+
+<ul class="thumbnails">
+
+  <% _.each(types, function(type) { %>
+
+      <%= partial("equipmenttype", {type: type}) %>
+
+  <% }); %>
+
+</ul>

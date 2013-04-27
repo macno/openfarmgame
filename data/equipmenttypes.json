@@ -1,0 +1,20 @@
+[
+    {
+        "slug": "hoe",
+        "name": "Hoe",
+        "cost": 5,
+        "usetime": 120
+    },
+    {
+        "slug": "plow",
+        "name": "Plow",
+        "cost": 20,
+        "usetime": 60
+    },
+    {
+        "slug": "tractor",
+        "name": "Tractor",
+        "cost": 100,
+        "usetime": 30
+    }
+]

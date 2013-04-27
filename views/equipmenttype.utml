@@ -1,0 +1,44 @@
+<li class="span3">
+  <div class="thumbnail">
+    <img src="/images/<%- type.slug %>.jpg" width="300" height="200" alt="<%- type.name %>">
+    <h3><%- type.name %></h3>
+    <% if (user && user.id == farmer.id) { %>
+       <%
+       var hasIt = false
+       if ( user.equipments ) { 
+          for (var i in user.equipments) {
+              if(user.equipments[i] == type.slug) {
+                 hasIt=true;
+                 break;
+              }
+          }
+       }
+       if( hasIt ) {
+       %>
+	<p>&nbsp;</p>
+    <p>
+      <form action="/plot/<%- plot.uuid %>/plow" method="post">
+        <input type="hidden" name="type" value="<%- type.slug %>"/>
+        <input class="btn" type="submit" value="Plow" />
+      </form>
+    </p>
+
+
+       <% } else { %>
+
+
+    <p>Cost: <%- type.cost %> coins</p>
+    <p>
+      <form action="/plot/<%- plot.uuid %>/plow" method="post">
+        <input type="hidden" name="type" value="<%- type.slug %>"/>
+        <input class="btn" type="submit" value="Buy and Plow" <% if (farmer.coins < type.cost) { %>disabled="disabled"<% } %> />
+      </form>
+    </p>
+
+       <% } %>
+    <% } else { %>
+
+
+    <% } %>
+  </div>
+</li>

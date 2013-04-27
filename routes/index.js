@@ -22,6 +22,7 @@ var wf = require("webfinger"),
     uuid = require("node-uuid"),
     Farmer = require("../models/farmer"),
     Plot = require("../models/plot"),
+    EquipmentType = require("../models/equipmenttype"),
     Crop = require("../models/crop"),
     CropType = require("../models/croptype"),
     Host = require("../models/host"),
@@ -265,6 +266,7 @@ exports.handleTearUp = function(req, res, next) {
         function(results, callback) {
             crop = results;
             plot.crop = null;
+            plot.state = Plot.RAW;
             plot.emptyNotified = null;
             plot.save(callback);
         },
@@ -336,6 +338,65 @@ exports.plant = function(req, res, next) {
         res.render('plant', { title: 'Plant a new crop', farmer: req.user, plot: plot, types: types });
     });
 };
+
+exports.plow = function(req, res, next) {
+
+    var plot = req.plot;
+    EquipmentType.getAll(function(err, types) {
+    	res.render('plow', { title: 'Plow the plant', farmer: req.user, plot: plot, types: types })
+    });
+
+}
+
+exports.handlePlow = function(req, res, next) {
+
+    var plot = req.plot,
+        slug = req.body.type,
+        type,
+        equipment,
+        now = Date.now();
+
+    async.waterfall([
+        function(callback) {
+            EquipmentType.get(slug, callback);
+        },
+        function(results, callback) {
+
+            if( !req.user.equipments ) {
+		req.user.equipments = [];
+            }
+            if( !req.user.equipments[slug] ) {
+                
+               type = results;
+
+               if (type.cost > req.user.coins) {
+                  callback(new Error("Not enough coins"), null);
+                  return;
+               }
+
+               req.user.coins -= type.cost;
+               req.user.equipments.push(slug);
+               req.user.save(callback);
+            }
+
+        },
+        function(results, callback) {
+            plot.crop = null;
+            plot.state = Plot.PLOWING;
+            plot.equipment = slug;
+            plot.emptyNotified = null;
+            plot.updated = now;
+            plot.save(callback);
+        }
+    ], function(err) {
+        if (err) {
+            next(err);
+        } else {
+            res.redirect("/");
+        }
+    });
+
+}
 
 exports.handlePlant = function(req, res, next) {
 
@@ -465,6 +526,7 @@ exports.handleHarvest = function(req, res, next) {
                 },
                 function(callback) {
                     plot.crop = null;
+                    plot.state = Plot.RAW;
                     plot.emptyNotified = null;
                     plot.save(callback);
                 },

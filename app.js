@@ -35,6 +35,7 @@ var fs = require("fs"),
     Plot = require("./models/plot"),
     Crop = require("./models/crop"),
     CropType = require("./models/croptype"),
+    EquipmentType = require("./models/equipmenttype"),
     OpenFarmGame = require("./models/openfarmgame"),
     Notifier = require("./lib/notifier"),
     Updater = require("./lib/updater"),
@@ -116,11 +117,19 @@ async.waterfall([
 
         DatabankObject.bank = db;
 
+        // Set initial equipmenttype data
+
+        log.info("Setting initial equipment data");
+
+        EquipmentType.initialData(function() {});
+
         // Set initial croptype data
 
         log.info("Setting initial crop data");
 
         CropType.initialData(callback);
+
+
     },
     function(callback) {
 
@@ -288,6 +297,8 @@ async.waterfall([
         app.get('/farmer/:webfinger', userAuth, userOptional, routes.farmer);
         app.get('/plot/:plot', userAuth, userOptional, reqPlot, routes.plot);
         app.get('/crop/:crop', userAuth, userOptional, reqCrop, routes.crop);
+        app.get('/plot/:plot/plow', userAuth, userRequired, reqPlot, userIsOwner, routes.plow);
+        app.post('/plot/:plot/plow', userAuth, userRequired, reqPlot, userIsOwner, routes.handlePlow);
         app.get('/plot/:plot/plant', userAuth, userRequired, reqPlot, userIsOwner, routes.plant);
         app.post('/plot/:plot/plant', userAuth, userRequired, reqPlot, userIsOwner, routes.handlePlant);
         app.get('/plot/:plot/tearup', userAuth, userRequired, reqPlot, userIsOwner, routes.tearUp);

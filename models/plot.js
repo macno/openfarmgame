@@ -29,6 +29,8 @@ Plot.schema = {
     pkey: "uuid",
     fields: ["owner",
              "crop",
+             "state",
+             "equipment",
              "created",
              "updated"]
 };
@@ -36,6 +38,7 @@ Plot.schema = {
 Plot.beforeCreate = function(props, callback) {
     props.uuid = uuid.v4();
     props.created = Date.now();
+    props.state = Plot.RAW;
     props.updated = props.created;
     callback(null, props);
 };
@@ -54,6 +57,9 @@ Plot.prototype.beforeSave = function(callback) {
     if (!plot.uuid) {
         plot.uuid = uuid.v4();
     }
+    if (!plot.state) {
+        plot.state = Plot.RAW;
+    }
     callback(null);
 };
 
@@ -71,5 +77,11 @@ Plot.prototype.asObject = function() {
         url: plot.url()
     };
 };
+
+// States
+
+Plot.RAW = "raw";
+Plot.PLOWING = "plowing";
+Plot.READY = "ready";
 
 module.exports = Plot;

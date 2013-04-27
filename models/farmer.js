@@ -32,6 +32,7 @@ Farmer.schema = {
         fields: ["name",
                  "coins",
                  "plots",
+                 "equipments",
                  "token",
                  "secret",
                  "inbox",
