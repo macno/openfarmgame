@@ -3,18 +3,21 @@
         "slug": "hoe",
         "name": "Hoe",
         "cost": 5,
-        "usetime": 120
+        "usecost": 0,
+        "plowtime": 120
     },
     {
         "slug": "plow",
         "name": "Plow",
         "cost": 20,
-        "usetime": 60
+        "usecost": 2,
+        "plowtime": 60
     },
     {
         "slug": "tractor",
         "name": "Tractor",
         "cost": 100,
-        "usetime": 30
+        "usecost": 10,
+        "plowtime": 30
     }
 ]

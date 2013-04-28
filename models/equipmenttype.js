@@ -29,7 +29,8 @@ EquipmentType.schema = {
         pkey: "slug",
         fields: ["name",
                  "cost",
-                 "usetime",
+                 "usecost",
+                 "plowtime",
                  "created",
                  "updated"]
     },

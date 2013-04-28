@@ -352,7 +352,6 @@ exports.handlePlow = function(req, res, next) {
 
     var plot = req.plot,
         slug = req.body.type,
-        type,
         equipment,
         now = Date.now();
 
@@ -362,28 +361,36 @@ exports.handlePlow = function(req, res, next) {
         },
         function(results, callback) {
 
+            equipment = results;
+            var hasToBuy = true;
             if( !req.user.equipments ) {
 		req.user.equipments = [];
+            } else {
+               for ( var i in req.user.equipments ) {
+                   if (req.user.equipments[i] == slug) {
+                       hasToBuy = false;
+                      break;
+                   }
+               }
             }
-            if( !req.user.equipments[slug] ) {
+            if( hasToBuy ) {
                 
-               type = results;
-
-               if (type.cost > req.user.coins) {
+               if (equipment.cost > req.user.coins) {
                   callback(new Error("Not enough coins"), null);
                   return;
                }
 
-               req.user.coins -= type.cost;
+               req.user.coins -= equipment.cost;
                req.user.equipments.push(slug);
-               req.user.save(callback);
+            } else {
+               req.user.coins -= equipment.usecost;
             }
-
+            req.user.save(callback);
         },
         function(results, callback) {
             plot.crop = null;
             plot.state = Plot.PLOWING;
-            plot.equipment = slug;
+            plot.plowcompleted = now + (equipment.plowtime * 1000 * 60) ;
             plot.emptyNotified = null;
             plot.updated = now;
             plot.save(callback);

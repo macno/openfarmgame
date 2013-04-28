@@ -30,7 +30,7 @@ Plot.schema = {
     fields: ["owner",
              "crop",
              "state",
-             "equipment",
+             "plowcompleted",
              "created",
              "updated"]
 };
